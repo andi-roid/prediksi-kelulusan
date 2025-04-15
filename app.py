@@ -5,6 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, confusion_matrix
 import seaborn as sns
+from sklearn.model_selection import cross_val_score
 
 st.title("Prediksi Kelulusan Siswa v2")
 

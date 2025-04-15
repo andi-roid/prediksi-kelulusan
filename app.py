@@ -27,8 +27,6 @@ data_dummy = pd.DataFrame({
 # Gabungkan data asli dan data dummy
 data = pd.concat([data, data_dummy], ignore_index=True)
 
-# Update status kelulusan berdasarkan data yang baru
-data['status'] = data.apply(lambda row: cek_status(row['nilai_ujian'], row['nilai_tugas'], row['kehadiran']), axis=1)
 
 # Encode target
 le = LabelEncoder()
@@ -55,6 +53,8 @@ st.sidebar.write(f"Standar Deviasi: ±{cv_std:.2f}")
 def cek_status(u, t, k):
     return 'Lulus' if u >= 75 and t >= 75 and k >= 80 else 'Tidak Lulus'
 
+
+# Update status kelulusan berdasarkan data yang baru
 data['status'] = data.apply(lambda row: cek_status(row['nilai_ujian'], row['nilai_tugas'], row['kehadiran']), axis=1)
 
 # Encode target

@@ -31,6 +31,13 @@ y = data['status_encoded']
 model = LogisticRegression()
 model.fit(X, y)
 
+from sklearn.model_selection import cross_val_score
+
+# Lakukan Cross Validation
+cv_scores = cross_val_score(model, X, y, cv=5)  # 5-fold CV
+cv_mean = cv_scores.mean()
+cv_std = cv_scores.std()
+
 
 # Evaluasi model dengan data training
 y_pred_train = model.predict(X)
@@ -47,6 +54,10 @@ sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=le.class
 plt.xlabel("Prediksi")
 plt.ylabel("Aktual")
 st.sidebar.pyplot(fig_cm)
+st.sidebar.markdown("---")
+st.sidebar.subheader("📈 Cross-Validation")
+st.sidebar.write(f"CV Akurasi Rata-rata: **{cv_mean:.2f}**")
+st.sidebar.write(f"Standar Deviasi: ±{cv_std:.2f}")
 
 
 # Upload file dari user

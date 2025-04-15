@@ -29,6 +29,26 @@ y = data['status_encoded']
 model = LogisticRegression()
 model.fit(X, y)
 
+from sklearn.metrics import accuracy_score, confusion_matrix
+import seaborn as sns
+
+# Evaluasi model dengan data training
+y_pred_train = model.predict(X)
+akurasi = accuracy_score(y, y_pred_train)
+conf_matrix = confusion_matrix(y, y_pred_train)
+
+st.sidebar.subheader("📊 Evaluasi Model")
+st.sidebar.write(f"Akurasi model pada data latih: **{akurasi:.2f}**")
+
+# Visualisasi confusion matrix
+st.sidebar.write("Confusion Matrix:")
+fig_cm = plt.figure(figsize=(3, 2))
+sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=le.classes_, yticklabels=le.classes_)
+plt.xlabel("Prediksi")
+plt.ylabel("Aktual")
+st.sidebar.pyplot(fig_cm)
+
+
 # Upload file dari user
 uploaded_file = st.file_uploader("Upload file CSV kamu di sini", type=["csv"])
 

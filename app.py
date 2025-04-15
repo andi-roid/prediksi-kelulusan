@@ -35,7 +35,7 @@ model.fit(X, y)
 from sklearn.model_selection import cross_val_score
 
 # Lakukan Cross Validation
-cv_scores = cross_val_score(model, X, y, cv=5)  # 5-fold CV
+cv_scores = cross_val_score(model, X, y, cv=3)  # 5-fold CV
 cv_mean = cv_scores.mean()
 cv_std = cv_scores.std()
 

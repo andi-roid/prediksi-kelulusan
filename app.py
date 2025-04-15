@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import accuracy_score, confusion_matrix
+import seaborn as sns
 
 st.title("Prediksi Kelulusan Siswa v2")
 
@@ -29,8 +31,6 @@ y = data['status_encoded']
 model = LogisticRegression()
 model.fit(X, y)
 
-from sklearn.metrics import accuracy_score, confusion_matrix
-import seaborn as sns
 
 # Evaluasi model dengan data training
 y_pred_train = model.predict(X)

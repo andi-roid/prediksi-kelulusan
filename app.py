@@ -9,12 +9,40 @@ from sklearn.model_selection import cross_val_score
 
 st.title("Prediksi Kelulusan Siswa v2")
 
-# Data dummy untuk melatih model
-data = pd.DataFrame({
-    'nilai_ujian': [80, 72, 65, 90, 70],
-    'nilai_tugas': [85, 75, 60, 95, 68],
-    'kehadiran': [90, 80, 70, 95, 75],
+
+# Tambah data dummy ke dataset
+data_dummy = pd.DataFrame({
+    'nilai_ujian': [80, 72, 65, 90, 70, 88, 91, 78, 84, 60, 79, 85, 66, 95, 68, 76, 82, 73, 77, 92],
+    'nilai_tugas': [85, 75, 60, 95, 68, 90, 94, 80, 88, 63, 78, 85, 69, 96, 72, 78, 84, 76, 80, 93],
+    'kehadiran': [90, 80, 70, 95, 75, 88, 92, 82, 90, 72, 81, 87, 74, 94, 78, 80, 85, 78, 83, 91],
 })
+
+# Gabungkan data asli dan data dummy
+data = pd.concat([data, data_dummy], ignore_index=True)
+
+# Update status kelulusan berdasarkan data yang baru
+data['status'] = data.apply(lambda row: cek_status(row['nilai_ujian'], row['nilai_tugas'], row['kehadiran']), axis=1)
+
+# Encode target
+le = LabelEncoder()
+data['status_encoded'] = le.fit_transform(data['status'])
+
+# Latih model dengan data yang sudah ditambah
+X = data[['nilai_ujian', 'nilai_tugas', 'kehadiran']]
+y = data['status_encoded']
+model = LogisticRegression()
+model.fit(X, y)
+
+# Evaluasi model dengan Cross Validation
+from sklearn.model_selection import cross_val_score
+cv_scores = cross_val_score(model, X, y, cv=5)  # 5-fold CV
+cv_mean = cv_scores.mean()
+cv_std = cv_scores.std()
+
+# Tampilkan hasil evaluasi
+st.sidebar.subheader("📈 Cross-Validation")
+st.sidebar.write(f"CV Akurasi Rata-rata: **{cv_mean:.2f}**")
+st.sidebar.write(f"Standar Deviasi: ±{cv_std:.2f}")
 
 # Label kelulusan berdasarkan kriteria
 def cek_status(u, t, k):

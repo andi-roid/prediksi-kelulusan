@@ -10,6 +10,13 @@ from sklearn.model_selection import cross_val_score
 st.title("Prediksi Kelulusan Siswa v2")
 
 
+# Data asli sebelum ditambah data dummy
+data = pd.DataFrame({
+    'nilai_ujian': [80, 72, 65, 90, 70],
+    'nilai_tugas': [85, 75, 60, 95, 68],
+    'kehadiran': [90, 80, 70, 95, 75],
+})
+
 # Tambah data dummy ke dataset
 data_dummy = pd.DataFrame({
     'nilai_ujian': [80, 72, 65, 90, 70, 88, 91, 78, 84, 60, 79, 85, 66, 95, 68, 76, 82, 73, 77, 92],

@@ -64,5 +64,3 @@ else:
     st.info("Silakan upload file CSV untuk mulai prediksi.")
 
 
-if __name__ == "__main__":
-    main()
